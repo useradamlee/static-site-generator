@@ -7,7 +7,7 @@ This is a guided project that tell me what to build but not really how
 Status: **In progress**
 
 - [x] Chapter 1
-- [ ] Chapter 2
+- [x] Chapter 2
 - [ ] Chapter 3
 - [ ] Chapter 4
 - [ ] Chapter 5
