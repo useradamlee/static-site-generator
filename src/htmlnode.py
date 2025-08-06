@@ -56,8 +56,8 @@ def text_node_to_html_node(text_node):
         return LeafNode("i", text_node.text)
     if text_node.text_type == TextType.CODE:
         return LeafNode("code", text_node.text)
-    if text_node.text_type == TextType.LINKS:
+    if text_node.text_type == TextType.LINK:
         return LeafNode("a", text_node.text, props={"href": text_node.url})
-    if text_node.text_type == TextType.IMAGES:
+    if text_node.text_type == TextType.IMAGE:
         return LeafNode("img", "", props={"src": text_node.url, "alt": text_node.text})
     raise Exception("TextNode is none of the valid types")

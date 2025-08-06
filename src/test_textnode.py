@@ -14,7 +14,7 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("This is a text node", TextType.BOLD, URL="https://www.boot.dev")
         self.assertEqual(node, node2)
     def test_neq(self):
-        node = TextNode("This is a text node", TextType.LINKS)
+        node = TextNode("This is a text node", TextType.LINK)
         node2 = TextNode("This is a text node", TextType.BOLD)
         self.assertNotEqual(node, node2)
     def test_neq2(self):
@@ -41,12 +41,12 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.tag, "i")
         self.assertEqual(html_node.to_html(), "<i>This is a italic node</i>")
     def test_link(self):
-        node = TextNode("This is a link node", TextType.LINKS, URL="https://www.google.com")
+        node = TextNode("This is a link node", TextType.LINK, URL="https://www.google.com")
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "a")
         self.assertEqual(html_node.to_html(), '<a href="https://www.google.com">This is a link node</a>')
     def test_image(self):
-        node = TextNode("This is an image", TextType.IMAGES, "https://www.boot.dev")
+        node = TextNode("This is an image", TextType.IMAGE, "https://www.boot.dev")
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.value, "")
