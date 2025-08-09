@@ -1,5 +1,4 @@
 import unittest
-from textblock import markdown_to_blocks, BlockType, block_to_block_type
 from textblock import (
     markdown_to_html_node,
     markdown_to_blocks,
@@ -132,7 +131,7 @@ the **same** even with inline stuff
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
-    
+
     def test_blockquote(self):
         md = """
 > This is a
