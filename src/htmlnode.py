@@ -1,5 +1,3 @@
-from textnode import TextType
-
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
@@ -13,7 +11,7 @@ class HTMLNode:
         else:
             self.props = props
     def to_html(self):
-        raise NotImplementedError
+        raise NotImplementedError("to_html method not implemented")
     def props_to_html(self):
         if self.props == {}:
             return ""
@@ -38,26 +36,14 @@ class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
         super().__init__(tag, None, children, props)
     def to_html(self):
-        if not self.tag:
-            raise ValueError("No tag provided")
-        if not self.children:
-            raise ValueError("Missing children")
-        content = ""
+        if self.tag is None:
+            raise ValueError("invalid HTML: no tag")
+        if self.children is None:
+            raise ValueError("invalid HTML: no children")
+        children_html = ""
         for child in self.children:
-            content += child.to_html()
-        return f"<{self.tag}{self.props_to_html()}>{content}</{self.tag}>"
+            children_html += child.to_html()
+        return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
 
-def text_node_to_html_node(text_node):
-    if text_node.text_type == TextType.TEXT:
-        return LeafNode(None, text_node.text)
-    if text_node.text_type == TextType.BOLD:
-        return LeafNode("b", text_node.text)
-    if text_node.text_type == TextType.ITALIC:
-        return LeafNode("i", text_node.text)
-    if text_node.text_type == TextType.CODE:
-        return LeafNode("code", text_node.text)
-    if text_node.text_type == TextType.LINK:
-        return LeafNode("a", text_node.text, props={"href": text_node.url})
-    if text_node.text_type == TextType.IMAGE:
-        return LeafNode("img", "", props={"src": text_node.url, "alt": text_node.text})
-    raise Exception("TextNode is none of the valid types")
+    def __repr__(self):
+        return f"ParentNode({self.tag}, children: {self.children}, {self.props})"
