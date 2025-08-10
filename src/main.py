@@ -1,14 +1,8 @@
 from copystatic import copystatic
-
-def extract_title(markdown):
-    for line in markdown.split('\n'):
-        if line.startswith("# "):
-            return line.split("# ")[1].strip()
-    raise Exception("No h1 header found")
-
+from generatepage import generate_page
 def main():
     copystatic("static", "public")
-
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 if __name__ == "__main__":
     main()
