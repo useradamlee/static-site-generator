@@ -1,6 +1,9 @@
 import os
+import re
 from pathlib import Path
 from textblock import markdown_to_html_node
+
+
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, base_path):
     abs_content = os.path.abspath(dir_path_content)
@@ -21,6 +24,14 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
         generate_pages_recursive(item_path, template_path, item_dest_path, base_path)
 
 def generate_page(from_path, template_path, dest_path, base_path):
+    def build_url(base_path, rest):
+        return base_path.rstrip("/") + "/" + rest.lstrip("/")
+    def replace_href(match):
+        rest = match.group(1)
+        return f'href="{build_url(base_path, rest)}'
+    def replace_src(match):
+        rest = match.group(1)
+        return f'src="{build_url(base_path, rest)}'
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path) as file:
         from_path_content = file.read()
@@ -28,7 +39,9 @@ def generate_page(from_path, template_path, dest_path, base_path):
         template_path_content = file.read()
     HTMLstring = markdown_to_html_node(from_path_content).to_html()
     page_title = extract_title(from_path_content)
-    full_html_page = template_path_content.replace('{{ Title }}', page_title).replace('{{ Content }}', HTMLstring).replace('href="/', f'href="{base_path}').replace('src="/', f'src="{base_path}')
+    full_html_page = template_path_content.replace('{{ Title }}', page_title).replace('{{ Content }}', HTMLstring)
+    full_html_page = re.sub(r'href="/([^"]*)', replace_href, full_html_page)
+    full_html_page = re.sub(r'src="/([^"]*)', replace_src, full_html_page)
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
     with open(dest_path, "w") as f:
         f.write(full_html_page)

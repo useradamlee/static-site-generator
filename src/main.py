@@ -3,7 +3,7 @@ from copystatic import copystatic
 from generatepage import generate_pages_recursive
 
 def main():
-    if not sys.argv[1]:
+    if len(sys.argv) < 2:
         basepath = '/'
     else:
         basepath = sys.argv[1]
