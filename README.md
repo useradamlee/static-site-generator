@@ -4,10 +4,10 @@
 
 This is a guided project that tell me what to build but not really how
 
-Status: **In progress**
+Status: **Course completed! (Although I will come back to use it as my portfolio website)**
 
 - [x] Chapter 1
 - [x] Chapter 2
 - [x] Chapter 3
 - [x] Chapter 4
-- [ ] Chapter 5
+- [x] Chapter 5
