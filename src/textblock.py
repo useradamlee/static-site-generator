@@ -14,7 +14,7 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered_list"
 
 def markdown_to_blocks(markdown):
-    return list(filter(lambda line: line != "", 
+    return list(filter(lambda line: line != "",
                        map(lambda line: line.strip(), markdown.split("\n\n"))))
 # I realised that map would work in this context
 # filter would skip the ones with ""
@@ -48,9 +48,8 @@ def block_to_block_type(block):
             if not line.startswith(expected_start):
                 # Not an ordered list
                 return BlockType.PARAGRAPH
-            return BlockType.ORDERED_LIST
+        return BlockType.ORDERED_LIST
     return BlockType.PARAGRAPH
-
 
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
@@ -59,7 +58,6 @@ def markdown_to_html_node(markdown):
         html_node = block_to_html_node(block)
         children.append(html_node)
     return ParentNode("div", children, None)
-
 
 def block_to_html_node(block):
     block_type = block_to_block_type(block)
